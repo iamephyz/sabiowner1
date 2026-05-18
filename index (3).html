@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SabiOwner Real Estate – We Sabi The Owner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A1628;
+  --navy-light:#112240;
+  --navy-mid:#1a2e4a;
+  --gold:#C9952A;
+  --gold-light:#E8B84B;
+  --gold-pale:#F5E6C0;
+  --white:#FFFFFF;
+  --off-white:#F8F5EE;
+  --text-muted:#8A9BB5;
+  --green-dark:#0E3D2E;
+  --green-mid:#1A5C44;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes countUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.2rem 5%;display:flex;align-items:center;justify-content:space-between;transition:background 0.4s ease,box-shadow 0.4s ease}
+nav.scrolled{background:rgba(10,22,40,0.97);box-shadow:0 2px 30px rgba(0,0,0,0.4)}
+.nav-logo{display:flex;flex-direction:column;line-height:1}
+.nav-logo .wordmark{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--white);letter-spacing:-0.02em}
+.nav-logo .wordmark span{color:var(--gold)}
+.nav-logo .tagline{font-size:0.62rem;color:var(--gold);letter-spacing:0.18em;text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:0.88rem;font-weight:500;letter-spacing:0.04em;text-transform:uppercase;transition:color 0.3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold);color:var(--navy);padding:0.65rem 1.6rem;border-radius:4px;font-weight:600;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;text-decoration:none;transition:background 0.3s,transform 0.2s}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--white);transition:all 0.3s}
+.mobile-menu{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:var(--navy);z-index:999;padding:6rem 2rem 2rem;flex-direction:column;gap:2rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--white);text-decoration:none;font-size:1.4rem;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:1rem}
+
+/* HERO */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1800&q=80') center/cover no-repeat;transform:scale(1.05);transition:transform 8s ease}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,22,40,0.92) 0%,rgba(10,22,40,0.75) 50%,rgba(10,22,40,0.85) 100%)}
+.hero-content{position:relative;z-index:2;max-width:700px;padding:8rem 5% 5rem}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,149,42,0.15);border:1px solid rgba(201,149,42,0.4);padding:0.45rem 1rem;border-radius:50px;margin-bottom:2rem;animation:fadeIn 1s ease forwards}
+.hero-badge svg{width:14px;height:14px;fill:var(--gold)}
+.hero-badge span{font-size:0.75rem;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5rem);font-weight:900;line-height:1.05;margin-bottom:1.5rem;animation:fadeUp 0.9s 0.2s ease both}
+.hero h1 em{font-style:normal;color:var(--gold);background:linear-gradient(90deg,var(--gold),var(--gold-light),var(--gold));background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite}
+.hero p{font-size:1.1rem;color:rgba(255,255,255,0.75);line-height:1.7;max-width:540px;margin-bottom:2.5rem;animation:fadeUp 0.9s 0.4s ease both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 0.9s 0.6s ease both}
+.btn-gold{background:var(--gold);color:var(--navy);padding:0.9rem 2rem;border-radius:4px;font-weight:700;font-size:0.9rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 25px rgba(201,149,42,0.35)}
+.btn-outline{border:1.5px solid rgba(255,255,255,0.4);color:var(--white);padding:0.9rem 2rem;border-radius:4px;font-weight:600;font-size:0.9rem;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all 0.3s}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-verified{position:absolute;right:5%;top:50%;transform:translateY(-50%);background:rgba(201,149,42,0.12);border:1px solid rgba(201,149,42,0.35);border-radius:12px;padding:1.5rem;text-align:center;max-width:160px;animation:fadeIn 1.2s 0.8s ease both;display:none}
+.hero-verified svg{width:36px;height:36px;fill:var(--gold);margin-bottom:0.5rem}
+.hero-verified p{font-size:0.7rem;font-weight:700;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;line-height:1.4}
+.hero-scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0.6;animation:fadeIn 1.5s 1s ease both}
+.hero-scroll span{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold)}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2s infinite}
+
+/* STATS */
+.stats{background:var(--gold);padding:2rem 5%}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;max-width:1200px;margin:0 auto}
+.stat-item{text-align:center;padding:1.5rem;border-right:1px solid rgba(10,22,40,0.2);position:relative}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--navy);line-height:1}
+.stat-label{font-size:0.75rem;font-weight:600;color:rgba(10,22,40,0.65);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+
+/* SECTION SHARED */
+section{padding:6rem 5%}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-tag{font-size:0.72rem;font-weight:700;color:var(--gold);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.8rem;display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.15;margin-bottom:1.2rem}
+.section-title em{font-style:normal;color:var(--gold)}
+.section-sub{color:rgba(255,255,255,0.6);font-size:1rem;line-height:1.7;max-width:560px}
+
+/* WHY CHOOSE US */
+.why{background:var(--navy-light)}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:3.5rem}
+.feature-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:2rem;transition:all 0.4s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.4s}
+.feature-card:hover{background:rgba(201,149,42,0.07);border-color:rgba(201,149,42,0.3);transform:translateY(-4px)}
+.feature-card:hover::before{opacity:1}
+.feature-icon{width:52px;height:52px;background:rgba(201,149,42,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1.3rem}
+.feature-icon svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.feature-card h3{font-size:1.05rem;font-weight:700;margin-bottom:0.6rem;color:var(--white)}
+.feature-card p{font-size:0.88rem;color:var(--text-muted);line-height:1.65}
+
+/* OFFER */
+.offer{background:var(--off-white)}
+.offer .section-tag{color:var(--navy)}
+.offer .section-title{color:var(--navy)}
+.offer .section-sub{color:#666}
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-top:3rem}
+.checklist{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.checklist li{display:flex;align-items:flex-start;gap:1rem;font-size:0.95rem;color:#444;line-height:1.5}
+.check-icon{width:24px;height:24px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.check-icon svg{width:13px;height:13px;stroke:var(--navy);fill:none;stroke-width:3}
+.checklist li strong{color:var(--navy);font-weight:600}
+.quote-box{background:var(--navy);border-radius:16px;padding:2.5rem;text-align:center;position:relative;overflow:hidden}
+.quote-box::before{content:'"';font-family:'Playfair Display',serif;font-size:8rem;color:rgba(201,149,42,0.1);position:absolute;top:-1rem;left:1rem;line-height:1}
+.quote-stars{display:flex;justify-content:center;gap:4px;margin-bottom:1.2rem}
+.quote-stars svg{width:18px;height:18px;fill:var(--gold)}
+.quote-text{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);line-height:1.3;position:relative;z-index:1;margin-bottom:0.8rem}
+.quote-sub{font-size:0.78rem;font-weight:600;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase}
+
+/* AZIEL */
+.aziel{background:var(--navy);position:relative;overflow:hidden}
+.aziel::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,149,42,0.08) 0%,transparent 70%);pointer-events:none}
+.aziel-header{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.fcda-badge{background:rgba(201,149,42,0.12);border:1px solid rgba(201,149,42,0.4);border-radius:10px;padding:1rem 1.5rem;text-align:center;flex-shrink:0}
+.fcda-badge .badge-icon{font-size:1.8rem;margin-bottom:4px}
+.fcda-badge p{font-size:0.68rem;font-weight:800;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;line-height:1.3}
+.aziel-tags{display:flex;flex-wrap:wrap;gap:0.75rem;margin-bottom:2rem}
+.aziel-tag{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:0.4rem 1rem;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.05em}
+.aziel-tag svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+.price-card{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green-mid) 100%);border:1px solid rgba(201,149,42,0.25);border-radius:14px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.35s,box-shadow 0.35s}
+.price-card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:radial-gradient(circle,rgba(201,149,42,0.15) 0%,transparent 70%)}
+.price-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+.price-card.featured{border-color:var(--gold);background:linear-gradient(135deg,#1A4A35 0%,#2A6B50 100%)}
+.price-badge{position:absolute;top:-1px;right:1.5rem;background:var(--gold);color:var(--navy);font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:0 0 6px 6px}
+.price-type{font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.55);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:0.4rem}
+.price-rooms{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:0.3rem}
+.price-detail{font-size:0.8rem;color:rgba(255,255,255,0.55);margin-bottom:1.5rem}
+.price-row{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;border-top:1px solid rgba(255,255,255,0.12);padding-top:1.2rem}
+.price-amount{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--gold);line-height:1}
+.price-amount span{font-size:0.8rem;font-weight:400;color:rgba(255,255,255,0.5);display:block;font-family:'DM Sans',sans-serif}
+.price-sqm{background:rgba(201,149,42,0.15);border:1px solid rgba(201,149,42,0.3);border-radius:8px;padding:0.5rem 0.8rem;text-align:center}
+.price-sqm strong{display:block;font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold-light)}
+.price-sqm small{font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.08em}
+.urgency{margin-top:2.5rem;display:flex;align-items:center;justify-content:center;gap:1rem;background:rgba(201,149,42,0.08);border:1px dashed rgba(201,149,42,0.4);border-radius:10px;padding:1.2rem 2rem;flex-wrap:wrap}
+.urgency-icon{font-size:1.5rem;animation:pulse 2s infinite}
+.urgency p{font-size:0.85rem;font-weight:700;color:var(--gold);letter-spacing:0.05em;text-transform:uppercase;text-align:center}
+
+/* ABOUT */
+.about{background:var(--navy-light);overflow:hidden}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-img-wrap{position:relative;border-radius:16px;overflow:hidden;height:460px}
+.about-img-wrap img{width:100%;height:100%;object-fit:cover;border-radius:16px}
+.about-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,149,42,0.2),transparent);border-radius:16px}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:2.5rem}
+.about-stat{background:rgba(201,149,42,0.08);border:1px solid rgba(201,149,42,0.2);border-radius:10px;padding:1.2rem;text-align:center}
+.about-stat .num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
+.about-stat .lbl{font-size:0.72rem;font-weight:600;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:4px}
+
+/* CONTACT */
+.contact{background:var(--navy)}
+.contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}
+.contact-form-wrap{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:2.5rem}
+.form-row{margin-bottom:1.2rem}
+.form-row label{display:block;font-size:0.78rem;font-weight:600;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.5rem}
+.form-row input,.form-row select,.form-row textarea{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:0.85rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.92rem;outline:none;transition:border-color 0.3s}
+.form-row input::placeholder,.form-row textarea::placeholder{color:rgba(255,255,255,0.25)}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{border-color:var(--gold)}
+.form-row select option{background:var(--navy-mid);color:var(--white)}
+.form-row textarea{resize:vertical;min-height:110px}
+.contact-info{padding-top:1rem}
+.contact-info h3{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;margin-bottom:0.8rem}
+.contact-info p{color:var(--text-muted);font-size:0.95rem;line-height:1.65;margin-bottom:2rem}
+.info-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.3rem}
+.info-icon{width:40px;height:40px;background:rgba(201,149,42,0.1);border:1px solid rgba(201,149,42,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8}
+.info-text p{font-size:0.78rem;color:var(--text-muted);font-weight:600;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:2px}
+.info-text a,.info-text span{color:var(--white);font-size:0.92rem;text-decoration:none;transition:color 0.3s}
+.info-text a:hover{color:var(--gold)}
+
+/* FOOTER */
+footer{background:rgba(0,0,0,0.4);border-top:1px solid rgba(255,255,255,0.06);padding:2.5rem 5%}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem}
+.footer-logo .wordmark{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--white)}
+.footer-logo .wordmark span{color:var(--gold)}
+.footer-logo small{display:block;font-size:0.65rem;color:var(--text-muted);letter-spacing:0.12em;text-transform:uppercase;margin-top:2px}
+.footer-socials{display:flex;gap:0.8rem}
+.social-btn{width:38px;height:38px;border:1px solid rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;font-size:0.8rem;transition:all 0.3s;font-weight:700}
+.social-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+.footer-copy{font-size:0.78rem;color:var(--text-muted);text-align:center;flex-basis:100%}
+
+/* WHATSAPP FLOAT */
+.wa-float{position:fixed;bottom:2rem;right:2rem;z-index:999;background:#25D366;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform 0.3s,box-shadow 0.3s;animation:pulse 3s infinite}
+.wa-float:hover{transform:scale(1.1);box-shadow:0 6px 30px rgba(37,211,102,0.6)}
+.wa-float svg{width:28px;height:28px;fill:var(--white)}
+
+/* RESPONSIVE */
+@media(min-width:900px){.hero-verified{display:block}}
+@media(max-width:900px){
+  .hamburger{display:flex}
+  .nav-links,.nav-cta{display:none}
+  .offer-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr}
+  .about-img-wrap{height:300px}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  section{padding:4rem 5%}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .stat-item{border-right:none;border-bottom:1px solid rgba(10,22,40,0.2)}
+  .stat-item:nth-child(odd){border-right:1px solid rgba(10,22,40,0.2)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#" class="nav-logo" style="text-decoration:none">
+    <span class="wordmark">Sabi<span>O</span>wner<span style="font-size:0.7rem;vertical-align:super;color:rgba(255,255,255,0.5)">.com</span></span>
+    <span class="tagline">We Sabi The Owner</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#offer">Services</a></li>
+    <li><a href="#aziel">Properties</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="tel:07037060327" class="nav-cta">Call Us</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#why" onclick="toggleMenu()">Why Us</a>
+  <a href="#offer" onclick="toggleMenu()">Services</a>
+  <a href="#aziel" onclick="toggleMenu()">Properties</a>
+  <a href="#about" onclick="toggleMenu()">About Us</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="tel:07037060327" style="color:var(--gold)">📞 07037060327</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+      <span>Verified &amp; Dispute-Free Properties</span>
+    </div>
+    <h1>Own Today.<br><em>Secure Tomorrow.</em></h1>
+    <p>Premium estate land &amp; luxury homes in prime locations across Nigeria. Secure your future with verified, hassle-free property ownership.</p>
+    <div class="hero-btns">
+      <a href="#aziel" class="btn-gold">
+        View Properties
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="https://wa.me/2347037060327" class="btn-outline" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.93 11.93 0 0012.04 0C5.4 0 .04 5.37.04 12c0 2.12.56 4.2 1.62 6.03L0 24l6.12-1.61A12.03 12.03 0 0012.04 24c6.64 0 12-5.37 12-12 0-3.2-1.25-6.21-3.52-8.52zm-8.48 18.46a9.95 9.95 0 01-5.08-1.38l-.36-.22-3.74.98 1-3.65-.24-.38A9.95 9.95 0 012.07 12c0-5.51 4.49-10 10-10s10 4.49 10 10-4.49 10-10 10zm5.5-7.42c-.3-.15-1.78-.88-2.06-.97-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.07a8.24 8.24 0 01-2.44-1.51 9.16 9.16 0 01-1.69-2.11c-.17-.3-.02-.46.13-.6.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.89.12.57-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.07-.12-.27-.2-.57-.35z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+  </div>
+  <div class="hero-verified">
+    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+    <p>Verified &amp;<br>Dispute-Free<br>Properties</p>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="500">0+</div>
+      <div class="stat-label">Happy Owners</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-num" data-target="100">0+</div>
+      <div class="stat-label">Properties Listed</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Genuine Titles</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <div class="stat-num">5+</div>
+      <div class="stat-label">Years of Trust</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY CHOOSE US -->
+<section class="why" id="why">
+  <div class="section-inner">
+    <span class="section-tag reveal">Why Choose SabiOwner</span>
+    <h2 class="section-title reveal reveal-delay-1">Your <em>Property Journey</em>,<br>Done Right.</h2>
+    <p class="section-sub reveal reveal-delay-2">From site inspection to ownership documentation, we walk every step with you — making real estate simple, safe, and rewarding.</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Prime Locations</h3>
+        <p>High-value areas with strong appreciation potential. Every listing is carefully selected for long-term investment growth.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        </div>
+        <h3>Legal &amp; Secure</h3>
+        <p>100% genuine titles with hassle-free documentation. We verify every property so you invest with complete peace of mind.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Luxury Living</h3>
+        <p>Exquisite homes designed for comfort, status, and class. Our properties redefine what it means to live well in Nigeria.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </div>
+        <h3>Smart Investment</h3>
+        <p>Land that grows in value. Legacy that lasts. Build generational wealth with property assets in Nigeria's fastest-growing corridors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE OFFER -->
+<section class="offer" id="offer">
+  <div class="section-inner">
+    <div class="offer-grid">
+      <div>
+        <span class="section-tag reveal">What We Offer</span>
+        <h2 class="section-title reveal reveal-delay-1">Everything You Need<br>to <em style="color:var(--gold)">Own Property</em></h2>
+        <p class="section-sub reveal reveal-delay-2" style="margin-bottom:2rem">From raw land to fully finished luxury homes, SabiOwner covers every segment of the Nigerian real estate market.</p>
+        <ul class="checklist">
+          <li class="reveal">
+            <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><strong>Estate Land</strong> (Residential &amp; Commercial) — Secure plots in prime estates with verified allocation.</div>
+          </li>
+          <li class="reveal reveal-delay-1">
+            <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><strong>Luxury Fully Detached &amp; Semi-Detached Homes</strong> — Purpose-built for comfort, elegance, and lasting value.</div>
+          </li>
+          <li class="reveal reveal-delay-2">
+            <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><strong>Flexible Payment Plans</strong> — Own your property on a schedule that works for your finances.</div>
+          </li>
+          <li class="reveal reveal-delay-3">
+            <div class="check-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div><strong>Site Inspection Available</strong> — Visit any property before you commit. No pressure, just facts.</div>
+          </li>
+        </ul>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="quote-box">
+          <div class="quote-stars">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="quote-text">Rent Expires.<br>Ownership Lasts Forever.</p>
+          <p class="quote-sub">Your Future Starts With a Decision Today</p>
+          <div style="margin-top:2rem">
+            <a href="https://wa.me/2347037060327" class="btn-gold" target="_blank" rel="noopener" style="display:inline-flex">
+              Start Your Journey
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITY OF AZIEL -->
+<section class="aziel" id="aziel">
+  <div class="section-inner">
+    <div class="aziel-header">
+      <div>
+        <span class="section-tag reveal">Featured Development</span>
+        <h2 class="section-title reveal reveal-delay-1">Own a Piece of<br><em>City of Aziel</em></h2>
+      </div>
+      <div class="fcda-badge reveal">
+        <div class="badge-icon">🏛️</div>
+        <p>FCDA<br>Approved</p>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem" class="reveal">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <span style="color:rgba(255,255,255,0.7);font-size:1rem">Deidei, Abuja &nbsp;—&nbsp; <span style="color:var(--gold);font-weight:600">On a Tarred Road</span></span>
+    </div>
+    <p class="reveal reveal-delay-1" style="color:rgba(255,255,255,0.55);font-size:0.9rem;margin-bottom:2rem;font-style:italic">Prime Location. Premium Living. Lasting Value.</p>
+    <div class="aziel-tags reveal reveal-delay-1">
+      <span class="aziel-tag">
+        <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        On a Tarred Road
+      </span>
+      <span class="aziel-tag">
+        <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        Secure &amp; Serene
+      </span>
+      <span class="aziel-tag">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Instant Allocation
+      </span>
+      <span class="aziel-tag">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Great for Investment
+      </span>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <p class="price-type">Plot Type 1</p>
+        <p class="price-rooms">3-Bedroom Terrace Duplex</p>
+        <p class="price-detail">With Attached BQ &nbsp;·&nbsp; Residential</p>
+        <div class="price-row">
+          <div class="price-amount">₦3.0M<span>Starting price</span></div>
+          <div class="price-sqm">
+            <strong>250</strong>
+            <small>SQM</small>
+          </div>
+        </div>
+      </div>
+      <div class="price-card featured reveal reveal-delay-1">
+        <div class="price-badge">Most Popular</div>
+        <p class="price-type">Plot Type 2</p>
+        <p class="price-rooms">3-Bedroom Fully Detached Duplex</p>
+        <p class="price-detail">With Attached BQ &nbsp;·&nbsp; Premium</p>
+        <div class="price-row">
+          <div class="price-amount">₦4.0M<span>Starting price</span></div>
+          <div class="price-sqm">
+            <strong>400</strong>
+            <small>SQM</small>
+          </div>
+        </div>
+      </div>
+      <div class="price-card reveal reveal-delay-2">
+        <p class="price-type">Plot Type 3</p>
+        <p class="price-rooms">4-Bedroom Fully Detached Duplex</p>
+        <p class="price-detail">With Attached BQ &nbsp;·&nbsp; Luxury</p>
+        <div class="price-row">
+          <div class="price-amount">₦5.0M<span>Starting price</span></div>
+          <div class="price-sqm">
+            <strong>500</strong>
+            <small>SQM</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="urgency reveal">
+      <span class="urgency-icon">⏰</span>
+      <p>Limited Plots Available — Don't Miss Out! Call or WhatsApp Now.</p>
+      <a href="https://wa.me/2347037060327?text=I'm%20interested%20in%20City%20of%20Aziel%20property" class="btn-gold" target="_blank" rel="noopener" style="white-space:nowrap;padding:0.7rem 1.5rem;font-size:0.82rem">Inquire Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80" alt="SabiOwner Real Estate office">
+        <div style="position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;background:rgba(10,22,40,0.9);border:1px solid rgba(201,149,42,0.3);border-radius:10px;padding:1rem;z-index:2">
+          <p style="font-size:0.7rem;font-weight:700;color:var(--gold);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px">Head Office</p>
+          <p style="font-size:0.82rem;color:rgba(255,255,255,0.75)">Suite-4 IBWAS Filling Station, After Arab Road Junction, Kubwa, Abuja</p>
+        </div>
+      </div>
+      <div>
+        <span class="section-tag reveal">About Us</span>
+        <h2 class="section-title reveal reveal-delay-1">We Know<br><em>The Owner.</em></h2>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:1.2rem" class="reveal reveal-delay-2">SabiOwner Real Estate is a trusted Nigerian property company connecting buyers with verified, dispute-free properties across Abuja and beyond.</p>
+        <p style="color:rgba(255,255,255,0.6);line-height:1.75;margin-bottom:2rem" class="reveal reveal-delay-3">We simplify the journey to homeownership — from discovery to documentation — so you can invest with confidence and own with peace of mind. Our name says it all: we sabi the owner, and we'll make sure you become one.</p>
+        <div class="about-stats">
+          <div class="about-stat reveal">
+            <div class="num">500+</div>
+            <div class="lbl">Happy Owners</div>
+          </div>
+          <div class="about-stat reveal reveal-delay-1">
+            <div class="num">100+</div>
+            <div class="lbl">Properties</div>
+          </div>
+          <div class="about-stat reveal reveal-delay-2">
+            <div class="num">5+</div>
+            <div class="lbl">Years Active</div>
+          </div>
+          <div class="about-stat reveal reveal-delay-3">
+            <div class="num">100%</div>
+            <div class="lbl">Verified Titles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-inner">
+    <span class="section-tag reveal">Get In Touch</span>
+    <h2 class="section-title reveal reveal-delay-1" style="margin-bottom:3rem">Your Future Starts With a<br><em>Decision Today.</em></h2>
+    <div class="contact-grid">
+      <div class="contact-form-wrap reveal">
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;color:var(--white)">Send Us a Message</h3>
+        <div class="form-row">
+          <label>Full Name</label>
+          <input type="text" placeholder="Your full name">
+        </div>
+        <div class="form-row">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+234 800 000 0000">
+        </div>
+        <div class="form-row">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-row">
+          <label>I'm Interested In</label>
+          <select>
+            <option value="">Select an option</option>
+            <option>City of Aziel – 3BR Terrace Duplex (₦3M)</option>
+            <option>City of Aziel – 3BR Detached Duplex (₦4M)</option>
+            <option>City of Aziel – 4BR Detached Duplex (₦5M)</option>
+            <option>Estate Land (Residential)</option>
+            <option>Estate Land (Commercial)</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Message (Optional)</label>
+          <textarea placeholder="Tell us about your needs, budget, or any questions..."></textarea>
+        </div>
+        <button onclick="handleSubmit()" class="btn-gold" style="width:100%;justify-content:center;border:none;cursor:pointer;font-size:0.95rem;padding:1rem">
+          Send Message
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+        <p style="text-align:center;margin-top:1rem;font-size:0.8rem;color:var(--text-muted)">Or reach us instantly on
+          <a href="https://wa.me/2347037060327" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;font-weight:600"> WhatsApp</a>
+        </p>
+      </div>
+      <div class="contact-info reveal reveal-delay-2">
+        <h3>Let's Help You Own Your Future</h3>
+        <p>Reach us through any of these channels and our team will be in touch promptly.</p>
+        <div class="info-item">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.24 10.7a19.79 19.79 0 01-3.07-8.67A2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.06 6.06l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="info-text">
+            <p>Phone / WhatsApp</p>
+            <a href="tel:07037060327">07037060327</a><br>
+            <a href="tel:08075278767" style="color:var(--white)">08075278767</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="info-text">
+            <p>Email</p>
+            <a href="mailto:offcialsabiowner@gmail.com">offcialsabiowner@gmail.com</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="info-text">
+            <p>Website</p>
+            <a href="https://sabiowner.com" target="_blank" rel="noopener">sabiowner.com</a>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="info-text">
+            <p>Head Office</p>
+            <span>First Floor Suite-4, IBWAS Filling Station,<br>After Arab Road Junction, Kubwa, Abuja.</span>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <p style="font-size:0.78rem;font-weight:600;color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.8rem">Follow Us</p>
+          <div style="display:flex;gap:0.7rem">
+            <a href="https://www.instagram.com/officialsabiowner" target="_blank" rel="noopener" class="social-btn">IG</a>
+            <a href="#" class="social-btn">FB</a>
+            <a href="#" class="social-btn">YT</a>
+            <a href="#" class="social-btn">TT</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="wordmark">Sabi<span>O</span>wner<span style="font-size:0.65rem;vertical-align:super;color:rgba(255,255,255,0.4)">.com</span></span>
+      <small>We Sabi The Owner</small>
+    </div>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/officialsabiowner" target="_blank" rel="noopener" class="social-btn">IG</a>
+      <a href="#" class="social-btn">FB</a>
+      <a href="#" class="social-btn">YT</a>
+    </div>
+    <p class="footer-copy">© 2025 SabiOwner Real Estate. All rights reserved. &nbsp;|&nbsp; Kubwa, Abuja, Nigeria.</p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/2347037060327?text=Hello%20SabiOwner%2C%20I'm%20interested%20in%20your%20properties" class="wa-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M20.52 3.48A11.93 11.93 0 0012.04 0C5.4 0 .04 5.37.04 12c0 2.12.56 4.2 1.62 6.03L0 24l6.12-1.61A12.03 12.03 0 0012.04 24c6.64 0 12-5.37 12-12 0-3.2-1.25-6.21-3.52-8.52zm-8.48 18.46a9.95 9.95 0 01-5.08-1.38l-.36-.22-3.74.98 1-3.65-.24-.38A9.95 9.95 0 012.07 12c0-5.51 4.49-10 10-10s10 4.49 10 10-4.49 10-10 10zm5.5-7.42c-.3-.15-1.78-.88-2.06-.97-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.07a8.24 8.24 0 01-2.44-1.51 9.16 9.16 0 01-1.69-2.11c-.17-.3-.02-.46.13-.6.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.08-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.87 1.21 3.07c.15.2 2.1 3.22 5.1 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.89.12.57-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.07-.12-.27-.2-.57-.35z"/></svg>
+</a>
+
+<script>
+// NAVBAR SCROLL
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)
+})
+
+// MOBILE MENU
+function toggleMenu(){
+  document.getElementById('mobileMenu').classList.toggle('open')
+}
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}})
+},{threshold:0.12})
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))
+
+// HERO PARALLAX
+window.addEventListener('scroll',()=>{
+  const bg=document.getElementById('heroBg')
+  if(bg)bg.style.transform=`scale(1.05) translateY(${window.scrollY*0.3}px)`
+})
+
+// FORM SUBMIT
+function handleSubmit(){
+  const name=document.querySelector('input[type=text]').value
+  const phone=document.querySelector('input[type=tel]').value
+  const email=document.querySelector('input[type=email]').value
+  const interest=document.querySelector('select').value
+  const message=document.querySelector('textarea').value
+  if(!name||!phone){alert('Please fill in your name and phone number.');return}
+  const wa=`https://wa.me/2347037060327?text=Hello%20SabiOwner!%0A%0AName%3A%20${encodeURIComponent(name)}%0APhone%3A%20${encodeURIComponent(phone)}%0AEmail%3A%20${encodeURIComponent(email)}%0AInterested%20In%3A%20${encodeURIComponent(interest)}%0AMessage%3A%20${encodeURIComponent(message)}`
+  window.open(wa,'_blank')
+}
+
+// SMOOTH CLOSE MOBILE MENU ON LINK CLICK
+document.querySelectorAll('.mobile-menu a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('mobileMenu').classList.remove('open')
+  })
+})
+</script>
+</body>
+</html>
